@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Guest Bookings</title>
+        <link rel="stylesheet" href="styles.css">
+    </header>
+    <body>
+        <div class="FormDiv" >
+        <main>
+            <h1>You're Invited for a night of Adventure</h1>
+            <form id="rsvpForm">
+                <label>
+                    Name :
+                <input type="text" id="name" required>
+                </label>
+                <label>
+                    Email :
+                <input type="email" id="email" required>
+                </label>
+                 <label>
+                    Will You Attend :
+                <select id="attending">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                </label>
+                  <label>
+                    Number of Guests (Including You) :
+                <input type="number" id="guestCount" value="1" min="1">
+                </label>
+                <div class="ButtonDiv">
+                <button type="submit">Submit RSVP</button>
+                </div>
+            </form>
+            <p id="status"></p>
+        </main>
+        </div>
+        <script src="index.js"></script>
+   </body>
+</html>
