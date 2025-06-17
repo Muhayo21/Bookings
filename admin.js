@@ -1,69 +1,75 @@
-// Admin dashboard logic
 
-// Fetch guest data from the server
+// Displays and updates guest list in JSONBin
+
+const apiKey = '$2a$10$Nmr.1q1R.bUFczKU70W1Ou/dBPLwV/kCU0sVCkcuWkErvYsHaykSO'; 
+const binId = '685194b18960c979a5ab8635';   
+const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+//  Load guest list from JSONBin
 async function fetchGuests() {
-  const res = await fetch('/api/rsvps'); // Call backend API to get all guests
-  return res.json(); // Parse and return JSON array of guest objects
+  const res = await fetch(`${apiUrl}/latest`, {
+    headers: { 'X-Master-Key': apiKey }
+  });
+  const data = await res.json();
+  return data.record || [];
 }
 
-// Build a table row (<tr>) for a single guest
-function createRow(guest) {
-  const tr = document.createElement('tr'); // Create row element
+//  Build a row for each guest, with editable seat assignment
+function createRow(guest, index, guests) {
+  const tr = document.createElement('tr');
 
-  // Helper function to create and append <td> with text
   function td(text) {
-    const cell = document.createElement('td'); // Create cell
-    cell.textContent = text; // Set its content
-    tr.appendChild(cell); // Add cell to row
+    const cell = document.createElement('td');
+    cell.textContent = text;
+    tr.appendChild(cell);
   }
 
-  td(guest.id); // Add guest ID
-  td(guest.name); // Add guest name
-  td(guest.email); // Add guest email
-  td(guest.attending); // Add attending status
-  td(guest.guestCount); // Add total guest count
+  //  Basic details
+  td(index + 1); // Guest #
+  td(guest.name);
+  td(guest.email);
+  td(guest.attending);
+  td(guest.guestCount);
 
-  td(guest.seat || ''); // Add seat assignment (blank if none)
-
-  // --- Assign Seat Input and Save Button ---
-  const seatInput = document.createElement('input'); // Create text box
+  //  Editable seat
+  const seatInput = document.createElement('input');
   seatInput.type = 'text';
-  seatInput.value = guest.seat; // Pre-fill with current value
-  seatInput.placeholder = 'e.g., Table 3'; // Hint
+  seatInput.value = guest.seat || '';
+  seatInput.placeholder = 'e.g., Table 5';
 
-  const saveBtn = document.createElement('button'); // Button to save seat
+  const saveBtn = document.createElement('button');
   saveBtn.textContent = 'Save';
-
-  // Save button logic: send PUT request to backend
   saveBtn.addEventListener('click', async () => {
-    await fetch(`/api/rsvps/${guest.id}/seat`, {
+    guest.seat = seatInput.value;
+    guests[index] = guest;
+
+    //  Save updated guest list
+    await fetch(apiUrl, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ seat: seatInput.value })
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': apiKey
+      },
+      body: JSON.stringify(guests)
     });
-    load(); // Refresh the table after saving
+
+    load(); //  Refresh table
   });
 
-  // Final <td> for input + button
-  const actionTd = document.createElement('td');
-  actionTd.appendChild(seatInput);
-  actionTd.appendChild(saveBtn);
-  tr.appendChild(actionTd);
+  const seatCell = document.createElement('td');
+  seatCell.appendChild(seatInput);
+  seatCell.appendChild(saveBtn);
+  tr.appendChild(seatCell);
 
-  return tr; // Return the complete <tr> row
+  return tr;
 }
 
-// Load all guests and render them in the table
+//  Load guest list and populate table
 async function load() {
-  const guests = await fetchGuests(); // Get array of guests from server
-  const tbody = document.querySelector('#guestTable tbody'); // Find table body
-  tbody.innerHTML = ''; // Clear any existing rows
-
-  guests.forEach(guest => {
-    const row = createRow(guest); // Create row for each guest
-    tbody.appendChild(row); // Add row to the table
-  });
+  const guests = await fetchGuests();
+  const tbody = document.querySelector('#guestTable tbody');
+  tbody.innerHTML = '';
+  guests.forEach((g, i) => tbody.appendChild(createRow(g, i, guests)));
 }
 
-// Run load() when page is ready
-window.addEventListener('DOMContentLoaded', load);
+load(); //  Initial load
