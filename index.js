@@ -53,7 +53,7 @@ form.addEventListener('submit', async (e) => {
   }
 });
   let CurrentReservations = 0;
-    const form = document.getElementById("rsvpForm");
+   
     const message = document.getElementById("message");
     const countDisplay = document.getElementById("count");
 
