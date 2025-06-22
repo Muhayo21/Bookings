@@ -1,41 +1,76 @@
-
 <!DOCTYPE html>
-<html>
-    <header>
-        <title>Guest Bookings</title>
-        <link rel="stylesheet" href="styles.css">
-    </header>
-    <body>
-        <div class="FormDiv" >
-        <main>
-            <h1>You're Invited for a night of Adventure</h1>
-            <form id="rsvpForm">
-                <label>
-                    Name :
-                <input type="text" id="name" required>
-                </label>
-                <label>
-                    Email :
-                <input type="email" id="email" required>
-                </label>
-                 <label>
-                    Will You Attend :
-                <select id="attending">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-                </label>
-                  <label>
-                    Number of Guests (Including You) :
-                <input type="number" id="guestCount" value="1" min="1">
-                </label>
-                <div class="ButtonDiv">
-                <button type="submit">Submit RSVP</button>
-                </div>
-            </form>
-            <p id="status"></p>
-        </main>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guest Bookings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="FormDiv">
+    <main>
+      <div class="header-section">
+        <img src="AL.jpeg" alt="Adventure League" class="id-image" />
+        <h1>You're Invited for a Night of Adventure</h1>
+      </div>
+
+      <form id="rsvpForm">
+        <label>
+          Name:
+          <input type="text" id="name" class="TextVal" placeholder="Enter Your Name" required />
+        </label>
+
+        <label>
+          Email:
+          <input type="email" id="email" placeholder="Enter Your Email Address" class="TextVal" required />
+        </label>
+
+        <label>
+          Will You Attend:
+          <select id="attending" class="TextVal">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </label>
+
+        <label>
+          Number of Guests (Including You):
+          <input type="number" class="TextVal" id="guestCount" value="1" min="1" max="2" />
+        </label>
+
+        <div class="ButtonDiv">
+          <button type="submit" class="submits">Submit RSVP</button>
         </div>
-        <script src="index.js"></script>
-   </body>
+      </form>
+
+      <p id="message"></p>
+      <p>Reservations Made: <span id="count">0</span></p>
+    </main>
+  </div>
+
+  <script>
+    const MaxReservations = 12;
+    let CurrentReservations = 0;
+    const form = document.getElementById("rsvpForm");
+    const message = document.getElementById("message");
+    const countDisplay = document.getElementById("count");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const amountToAdd = parseInt(document.getElementById("guestCount").value);
+      const name = document.getElementById("name").value;
+
+      if (CurrentReservations + amountToAdd <= MaxReservations) {
+        CurrentReservations += amountToAdd;
+        countDisplay.textContent = CurrentReservations;
+        message.textContent = `Reservation confirmed for ${amountToAdd}`;
+        form.reset();
+      } else {
+        message.textContent = `Only ${MaxReservations - CurrentReservations} spots available.`;
+      }
+    });
+  </script>
+</body>
 </html>
