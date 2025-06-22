@@ -52,7 +52,8 @@ form.addEventListener('submit', async (e) => {
     status.textContent = 'Network error. Please try again later.';
   }
 });
-  let CurrentReservations = 0;
+     const MaxReservations = 12;
+    let CurrentReservations = 0;
    
     const message = document.getElementById("message");
     const countDisplay = document.getElementById("count");
