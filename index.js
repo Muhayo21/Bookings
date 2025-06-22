@@ -1,4 +1,4 @@
-<script>
+
 const apiKey = '$2a$10$Nmr.1q1R.bUFczKU70W1Ou/dBPLwV/kCU0sVCkcuWkErvYsHaykSO'; 
 const binId = '685194b18960c979a5ab8635';   
 const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
@@ -84,4 +84,4 @@ form.addEventListener('submit', async (e) => {
     status.textContent = '❌ Network error. Please try again later.';
   }
 });
-</script>
+
