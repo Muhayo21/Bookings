@@ -22,7 +22,7 @@ async function loadReservationCount() {
     const guests = data.record || [];
 
     CurrentReservations = guests.reduce((sum, g) => sum + (parseInt(g.guestCount) || 0), 0);
-    countDisplay.textContent = CurrentReservations;
+    countDisplay.textContent = CurrentReservations/MaxReservations;
 
   } catch (error) {
     console.error("Failed to load guest data:", error);
