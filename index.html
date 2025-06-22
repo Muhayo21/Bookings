@@ -49,28 +49,6 @@
     </main>
   </div>
 
-  <script>
-    const MaxReservations = 12;
-    let CurrentReservations = 0;
-    const form = document.getElementById("rsvpForm");
-    const message = document.getElementById("message");
-    const countDisplay = document.getElementById("count");
-
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const amountToAdd = parseInt(document.getElementById("guestCount").value);
-      const name = document.getElementById("name").value;
-
-      if (CurrentReservations + amountToAdd <= MaxReservations) {
-        CurrentReservations += amountToAdd;
-        countDisplay.textContent = CurrentReservations;
-        message.textContent = `Reservation confirmed for ${amountToAdd}`;
-        form.reset();
-      } else {
-        message.textContent = `Only ${MaxReservations - CurrentReservations} spots available.`;
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
