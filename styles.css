@@ -1,16 +1,118 @@
-body
-{
-margin: 0;
-padding: 0;
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: aquamarine;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #eafbf8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
-.FormDiv
-{
-    background-color: azure;
-    padding: 50px;
-    border-radius: 70p;
-    
+
+.FormDiv {
+  background-color: #dffaf0;
+  padding: 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+}
+
+.header-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.id-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-section h1 {
+  font-size: 1.4rem;
+  color: #1f3a39;
+  margin: 0;
+  text-align: left;
+  max-width: 300px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.TextVal,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  box-sizing: border-box;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.TextVal:focus,
+select:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.submits {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.submits:hover {
+  background-color: #45a049;
+}
+
+#message {
+  margin-top: 10px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+#count {
+  font-weight: bold;
+}
+
+@media (max-width: 480px) {
+  .header-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .id-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .header-section h1 {
+    font-size: 1.2rem;
+  }
 }
