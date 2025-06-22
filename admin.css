@@ -1,4 +1,4 @@
-/* Reset base styles */
+/* Reset and base styling */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f4fdfc;
+  background-color: #eafbf8;
   color: #333;
   padding: 40px 20px;
   display: flex;
@@ -16,26 +16,33 @@ body {
 
 main {
   width: 100%;
-  max-width: 900px;
-  background-color: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
 }
 
+/* Dashboard container */
+.dashboard-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Header styling */
 h1 {
   text-align: center;
-  margin-bottom: 30px;
+  background-color: #2b6777;
+  color: white;
+  padding: 20px;
   font-size: 2rem;
-  color: #2b6777;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
 }
 
-/* Table Styling */
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
-  overflow-x: auto;
 }
 
 thead {
@@ -62,12 +69,45 @@ th {
   font-weight: 600;
 }
 
-/* Responsive for smaller screens */
-@media (max-width: 600px) {
-  main {
-    padding: 20px;
-  }
+/* Inline input and button inside table cell */
+td input[type="number"] {
+  width: 60px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  margin-right: 6px;
+  outline: none;
+  transition: border 0.2s ease;
+}
 
+td input[type="number"]:focus {
+  border-color: #2b6777;
+}
+
+td button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  background-color: #2b6777;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+td button:hover {
+  background-color: #1e4c5a;
+}
+
+/* Make the row number column bold */
+td:first-child {
+  font-weight: bold;
+  color: #444;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
   table, thead, tbody, th, td, tr {
     display: block;
   }
@@ -77,26 +117,34 @@ th {
   }
 
   tr {
+    background-color: white;
+    border: 1px solid #ddd;
     margin-bottom: 15px;
-    background-color: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 10px;
   }
 
   td {
-    position: relative;
     padding-left: 50%;
+    position: relative;
     text-align: right;
+    border: none;
+    border-bottom: 1px solid #eee;
   }
 
   td::before {
     content: attr(data-label);
     position: absolute;
     left: 15px;
+    top: 12px;
     width: 45%;
+    padding-right: 10px;
     font-weight: bold;
-    color: #2b6777;
     text-align: left;
+    color: #2b6777;
+  }
+
+  td:last-child {
+    border-bottom: none;
   }
 }
