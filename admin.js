@@ -117,7 +117,7 @@ function createRow(guest, index, guests) {
 
   // ❌ Delete button
   const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = 'Delete';
+  deleteBtn.innerHTML = '🗑️';
   deleteBtn.style.marginLeft = '10px';
   deleteBtn.style.backgroundColor = '#c0392b';
   deleteBtn.style.color = 'white';
