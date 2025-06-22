@@ -4,6 +4,7 @@
 const apiKey = '$2a$10$Nmr.1q1R.bUFczKU70W1Ou/dBPLwV/kCU0sVCkcuWkErvYsHaykSO'; 
 const binId = '685194b18960c979a5ab8635';   
 const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+const adminPassword = "Ruthlessness"; // Change this to your secret password
 
 //  Load guest list from JSONBin
 async function fetchGuests() {
@@ -127,21 +128,29 @@ function createRow(guest, index, guests) {
   deleteBtn.style.cursor = 'pointer';
 
   deleteBtn.addEventListener('click', async () => {
-    if (confirm(`Delete guest: ${guest.name}?`)) {
-      guests.splice(index, 1); // Remove from array
+  const input = prompt("Enter admin password to delete this guest:");
 
-      await fetch(apiUrl, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': apiKey
-        },
-        body: JSON.stringify(guests)
-      });
+  if (input !== adminPassword) {
+    alert("Incorrect password. Deletion cancelled.");
+    return;
+  }
 
-      load(); // Refresh table
-    }
-  });
+  if (confirm(`Are you sure you want to delete ${guest.name}?`)) {
+    guests.splice(index, 1); // Remove from array
+
+    await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': apiKey
+      },
+      body: JSON.stringify(guests)
+    });
+
+    load(); // Refresh table
+  }
+});
+
 
   const seatCell = document.createElement('td');
   seatCell.appendChild(seatInput);
