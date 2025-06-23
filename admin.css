@@ -60,10 +60,12 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
+/*
 tr:hover {
   background-color: #e1f4f3;
   transition: background-color 0.3s ease;
 }
+*/
 
 th {
   font-weight: 600;
