@@ -56,10 +56,11 @@ form.addEventListener('submit', async (e) => {
 
   // ❌ Check if email already RSVP'd
   const emailExists = guests.some(g => g.email.toLowerCase() === email);
-  if (emailExists) {
-    status.textContent = '❌ This email has already RSVP’d.';
-    return;
-  }
+if (emailExists) {
+  message.textContent = '❌ This email has already RSVP’d.';
+  message.style.color = 'red';
+  return;
+}
 
   // ❌ Check capacity BEFORE submitting
   if (CurrentReservations + guestCount > MaxReservations) {
