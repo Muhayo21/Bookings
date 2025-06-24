@@ -25,7 +25,10 @@ async function loadReservationCount() {
 
   } catch (error) {
     console.error("Failed to load guest data:", error);
-    message.textContent = '⚠ Could not load current reservations.';
+    if (message) {
+      message.textContent = '⚠ Could not load current reservations.';
+      message.style.color = 'red';
+    }
   }
 }
 
@@ -50,21 +53,31 @@ form.addEventListener('submit', async (e) => {
     guests = data.record || [];
   } catch (error) {
     console.error("Error fetching guest list:", error);
-    status.textContent = '⚠ Error loading guest list. Try again later.';
+    if (status) {
+      status.textContent = '⚠ Error loading guest list. Try again later.';
+      status.style.color = 'red';
+    }
     return;
   }
 
   // ❌ Check if email already RSVP'd
   const emailExists = guests.some(g => g.email.toLowerCase() === email);
-if (emailExists) {
-  message.textContent = '❌ This email has already RSVP’d.';
-  message.style.color = 'red';
-  return;
-}
+  if (emailExists) {
+    if (message) {
+      message.textContent = '❌ This email has already RSVP’d.';
+      message.style.color = 'red';
+    } else {
+      console.warn("Element with id='message' not found in HTML");
+    }
+    return;
+  }
 
   // ❌ Check capacity BEFORE submitting
   if (CurrentReservations + guestCount > MaxReservations) {
-    message.textContent = `Only ${MaxReservations - CurrentReservations} spot(s) available.`;
+    if (message) {
+      message.textContent = `❌ Only ${MaxReservations - CurrentReservations} spot(s) available.`;
+      message.style.color = 'red';
+    }
     return;
   }
 
@@ -85,14 +98,31 @@ if (emailExists) {
     if (saveRes.ok) {
       CurrentReservations += guestCount;
       countDisplay.textContent = `${CurrentReservations} / ${MaxReservations} spots filled`;
-      status.textContent = `✅ Thanks ${name}! Your RSVP has been saved.`;
-      message.textContent = `Reservation confirmed for ${guestCount}`;
+
+      if (status) {
+        status.textContent = `✅ Thanks ${name}! Your RSVP has been saved.`;
+        status.style.color = 'green';
+      }
+
+      if (message) {
+        message.textContent = `✅ Reservation confirmed for ${guestCount}`;
+        message.style.color = 'green';
+      } else {
+        console.warn("Element with id='message' not found in HTML");
+      }
+
       form.reset();
     } else {
-      status.textContent = '❌ Error: Could not save your RSVP.';
+      if (status) {
+        status.textContent = '❌ Error: Could not save your RSVP.';
+        status.style.color = 'red';
+      }
     }
   } catch (error) {
     console.error(error);
-    status.textContent = '❌ Network error. Please try again later.';
+    if (status) {
+      status.textContent = '❌ Network error. Please try again later.';
+      status.style.color = 'red';
+    }
   }
 });
