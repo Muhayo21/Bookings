@@ -1,4 +1,3 @@
-
 const apiKey = '$2a$10$Nmr.1q1R.bUFczKU70W1Ou/dBPLwV/kCU0sVCkcuWkErvYsHaykSO'; 
 const binId = '685194b18960c979a5ab8635';   
 const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
@@ -36,31 +35,43 @@ loadReservationCount();
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
   const attending = document.getElementById('attending').value;
   const guestCount = parseInt(document.getElementById('guestCount').value, 10);
 
-  // Check capacity BEFORE submitting
+  // Load existing guest list
+  let guests = [];
+  try {
+    const res = await fetch(`${apiUrl}/latest`, {
+      headers: { 'X-Master-Key': apiKey }
+    });
+    const data = await res.json();
+    guests = data.record || [];
+  } catch (error) {
+    console.error("Error fetching guest list:", error);
+    status.textContent = '⚠ Error loading guest list. Try again later.';
+    return;
+  }
+
+  // ❌ Check if email already RSVP'd
+  const emailExists = guests.some(g => g.email.toLowerCase() === email);
+  if (emailExists) {
+    status.textContent = '❌ This email has already RSVP’d.';
+    return;
+  }
+
+  // ❌ Check capacity BEFORE submitting
   if (CurrentReservations + guestCount > MaxReservations) {
     message.textContent = `Only ${MaxReservations - CurrentReservations} spot(s) available.`;
     return;
   }
 
+  // ✅ Proceed with saving
   const newGuest = { name, email, attending, guestCount, seat: '' };
+  guests.push(newGuest);
 
   try {
-    // Load existing guest list
-    const res = await fetch(`${apiUrl}/latest`, {
-      headers: { 'X-Master-Key': apiKey }
-    });
-    const data = await res.json();
-    const guests = data.record || [];
-
-    // Add the new guest
-    guests.push(newGuest);
-
-    // Save updated list
     const saveRes = await fetch(apiUrl, {
       method: 'PUT',
       headers: {
@@ -72,8 +83,8 @@ form.addEventListener('submit', async (e) => {
 
     if (saveRes.ok) {
       CurrentReservations += guestCount;
-      countDisplay.textContent = CurrentReservations;
-      status.textContent = `Thanks ${name}! Your RSVP has been saved.`;
+      countDisplay.textContent = `${CurrentReservations} / ${MaxReservations} spots filled`;
+      status.textContent = `✅ Thanks ${name}! Your RSVP has been saved.`;
       message.textContent = `Reservation confirmed for ${guestCount}`;
       form.reset();
     } else {
@@ -84,4 +95,3 @@ form.addEventListener('submit', async (e) => {
     status.textContent = '❌ Network error. Please try again later.';
   }
 });
-
