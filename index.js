@@ -10,6 +10,13 @@ const countDisplay = document.getElementById("count");
 const MaxReservations = 14;
 let CurrentReservations = 0;
 
+const validateBtn = document.getElementById('validateBtn');
+const message = document.getElementById('message');
+const nameInput = document.getElementById('name');
+const attendingSelect = document.getElementById('attending');
+const guestCountInput = document.getElementById('guestCount');
+const deleteBtn = document.getElementById('deleteBtn'); // optional if you want delete
+
 // 🟢 Load current reservation count from JSONBin
 async function loadReservationCount() {
   try {
@@ -125,4 +132,61 @@ form.addEventListener('submit', async (e) => {
       status.style.color = 'red';
     }
   }
+});
+
+let isUpdateMode = false;        // Tracks if we're updating an existing guest
+let currentGuestIndex = -1;      // Index of the guest in the array
+
+// Enable/disable delete button (optional)
+function setDeleteButtonState(enabled) {
+    if (deleteBtn) deleteBtn.disabled = !enabled;
+}
+
+
+        validateBtn.addEventListener('click', async () => {
+    const emailInput = document.getElementById('email').value.trim().toLowerCase();
+    if (!emailInput) return alert("Please enter an email to validate.");
+
+    try {
+        // Fetch existing guest list from JSONBin
+        const res = await fetch(`${apiUrl}/latest`, {
+            headers: { 'X-Master-Key': apiKey }
+        });
+
+        const data = await res.json();
+        const guests = Array.isArray(data.record) ? data.record : [];
+
+        // Find guest by email
+        const guestIndex = guests.findIndex(g => g.email.toLowerCase() === emailInput);
+
+        if (guestIndex >= 0) {
+            // Guest found, populate form
+            const guest = guests[guestIndex];
+            nameInput.value = guest.name || '';
+            attendingSelect.value = guest.attending || 'Player';
+            guestCountInput.value = guest.guestCount || 1;
+
+            isUpdateMode = true;
+            currentGuestIndex = guestIndex;
+
+            message.textContent = `ℹ️ Found existing RSVP for ${guest.name}. You can update or delete it.`;
+            message.style.color = 'blue';
+
+            setDeleteButtonState(true); // enable delete button
+        } else {
+            // No guest found
+            message.textContent = 'ℹ️ No existing RSVP found. You can submit a new one.';
+            message.style.color = 'green';
+            isUpdateMode = false;
+            currentGuestIndex = -1;
+
+            setDeleteButtonState(false); // disable delete button
+        }
+
+    } catch (error) {
+        console.error("Validation error:", error);
+        message.textContent = '⚠ Could not validate email. Try again later.';
+        message.style.color = 'red';
+        setDeleteButtonState(false);
+    }
 });
