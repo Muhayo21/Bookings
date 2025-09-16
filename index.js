@@ -40,21 +40,26 @@ function setDeleteButtonState(enabled) {
 
 // 🔍 Validate email
 validateBtn.addEventListener('click', async () => {
-  const email = document.getElementById('email').value.trim().toLowerCase();
-  if (!email) return alert("Please enter an email to validate.");
+  const emailInput = document.getElementById('email').value.trim().toLowerCase();
+  if (!emailInput) return alert("Please enter an email to validate.");
 
   try {
-    const res = await fetch(`${apiUrl}/latest`, { headers: { 'X-Master-Key': apiKey } });
-    const data = await res.json();
-    const guests = data.record || [];
+    const res = await fetch(`${apiUrl}/latest`, { 
+      headers: { 'X-Master-Key': apiKey } 
+    });
 
-    const guestIndex = guests.findIndex(g => g.email.toLowerCase() === email);
+    const data = await res.json();
+
+    // JSONBin v3 stores the actual data in data.record
+    const guests = Array.isArray(data.record) ? data.record : [];
+
+    const guestIndex = guests.findIndex(g => g.email.toLowerCase() === emailInput);
 
     if (guestIndex >= 0) {
       const guest = guests[guestIndex];
-      document.getElementById('name').value = guest.name;
-      document.getElementById('attending').value = guest.attending;
-      document.getElementById('guestCount').value = guest.guestCount;
+      document.getElementById('name').value = guest.name || '';
+      document.getElementById('attending').value = guest.attending || 'Player';
+      document.getElementById('guestCount').value = guest.guestCount || 1;
 
       submitBtn.textContent = 'Update RSVP';
       isUpdateMode = true;
@@ -68,14 +73,13 @@ validateBtn.addEventListener('click', async () => {
       message.textContent = `ℹ️ No existing RSVP found. You can submit a new one.`;
       message.style.color = 'green';
       form.reset();
-      document.getElementById('email').value = email;
+      document.getElementById('email').value = emailInput;
       submitBtn.textContent = 'Submit RSVP';
       isUpdateMode = false;
       currentGuestIndex = -1;
 
       setDeleteButtonState(false);
     }
-
   } catch (error) {
     console.error(error);
     message.textContent = '⚠ Could not validate email. Try again later.';
@@ -83,6 +87,7 @@ validateBtn.addEventListener('click', async () => {
     setDeleteButtonState(false);
   }
 });
+
 
 // 🗑 Delete guest
 deleteBtn.addEventListener('click', async () => {
