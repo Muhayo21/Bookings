@@ -24,7 +24,6 @@
                 <label>
                     Email:
                     <input type="email" id="email" placeholder="Enter Your Email Address" class="TextVal" required />
-                   
                 </label>
 
                 <label>
@@ -42,23 +41,22 @@
 
                 <div class="ButtonDiv">
                     <button type="submit" class="submits">Submit RSVP</button>
-                    <button type="button" id="validateBtn" class="submits">Validate</button>
-                    <button type="button" id="deleteBtn" class="submits" disabled>Delete</button>
-
                 </div>
             </form>
 
             <p id="message"></p>
             <p>Reservations Made: <span id="count">0</span></p>
 
-            <!-- Map Section -->
+            <!--TEST-->
             <div style="position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9;">
+                <!-- The live embedded map -->
                 <iframe src="https://www.google.com/maps?q=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631&hl=en&z=15&output=embed"
                         style="border:0; width:100%; height:100%;"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         aria-label="Embedded map preview"></iframe>
 
+                <!-- Transparent overlay link that captures clicks -->
                 <a href="https://www.google.com/maps/search/?api=1&query=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631"
                    target="_blank"
                    rel="noopener"
@@ -66,11 +64,15 @@
                    title="Open in Google Maps"
                    style="
       position:absolute; inset:0;
-      text-indent:-9999px;
+      text-indent:-9999px; /* hide text visually, keep for screen readers */
       background: transparent;
       display:block;
     ">Open in Google Maps</a>
             </div>
+
+
+
+
         </main>
     </div>
 
