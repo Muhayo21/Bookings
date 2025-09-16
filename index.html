@@ -1,81 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Guest Bookings</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guest Bookings</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="FormDiv">
-      <main>
-          <div class="header-section">
-              <img src="AL.jpeg" alt="Adventure League" class="id-image" />
-              <h1>You're Invited for a Night of Adventure</h1>
-          </div>
+    <div class="FormDiv">
+        <main>
+            <div class="header-section">
+                <img src="AL.jpeg" alt="Adventure League" class="id-image" />
+                <h1>You're Invited for a Night of Adventure</h1>
+            </div>
 
-          <form id="rsvpForm">
-              <label>
-                  Name:
-                  <input type="text" id="name" class="TextVal" placeholder="Enter Your Name" required />
-              </label>
+            <form id="rsvpForm">
+                <label>
+                    Name:
+                    <input type="text" id="name" class="TextVal" placeholder="Enter Your Name" required />
+                </label>
 
-              <label>
-                  Email:
-                  <input type="email" id="email" placeholder="Enter Your Email Address" class="TextVal" required />
-              </label>
+                <label>
+                    Email:
+                    <input type="email" id="email" placeholder="Enter Your Email Address" class="TextVal" required />
+                    <button type="button" id="validateBtn">Validate</button>
+                    <button type="button" id="deleteBtn" disabled>Delete</button>
+                </label>
 
-              <label>
-                  Will You Attend:
-                  <select id="attending" class="TextVal">
-                      <option value="Player">Player</option>
-                      <option value="DM">DM</option>
-                  </select>
-              </label>
+                <label>
+                    Will You Attend:
+                    <select id="attending" class="TextVal">
+                        <option value="Player">Player</option>
+                        <option value="DM">DM</option>
+                    </select>
+                </label>
 
-              <label>
-                  Number of Guests (Including You):
-                  <input type="number" class="TextVal" id="guestCount" value="1" min="1" max="2" />
-              </label>
+                <label>
+                    Number of Guests (Including You):
+                    <input type="number" class="TextVal" id="guestCount" value="1" min="1" max="2" />
+                </label>
 
-              <div class="ButtonDiv">
-                  <button type="submit" class="submits">Submit RSVP</button>
-              </div>
-          </form>
+                <div class="ButtonDiv">
+                    <button type="submit" class="submits">Submit RSVP</button>
+                </div>
+            </form>
 
-          <p id="message"></p>
-          <p>Reservations Made: <span id="count">0</span></p>
+            <p id="message"></p>
+            <p>Reservations Made: <span id="count">0</span></p>
 
-          <!--TEST-->
-          <div style="position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9;">
-              <!-- The live embedded map -->
-              <iframe src="https://www.google.com/maps?q=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631&hl=en&z=15&output=embed"
-                      style="border:0; width:100%; height:100%;"
-                      loading="lazy"
-                      referrerpolicy="no-referrer-when-downgrade"
-                      aria-label="Embedded map preview"></iframe>
+            <!-- Map Section -->
+            <div style="position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9;">
+                <iframe src="https://www.google.com/maps?q=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631&hl=en&z=15&output=embed"
+                        style="border:0; width:100%; height:100%;"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        aria-label="Embedded map preview"></iframe>
 
-              <!-- Transparent overlay link that captures clicks -->
-              <a href="https://www.google.com/maps/search/?api=1&query=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631"
-                 target="_blank"
-                 rel="noopener"
-                 aria-label="Open this location in Google Maps"
-                 title="Open in Google Maps"
-                 style="
+                <a href="https://www.google.com/maps/search/?api=1&query=28+Rodger+Sishi+Rd,+Dawncrest,+Westville,+3631"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Open this location in Google Maps"
+                   title="Open in Google Maps"
+                   style="
       position:absolute; inset:0;
-      text-indent:-9999px; /* hide text visually, keep for screen readers */
+      text-indent:-9999px;
       background: transparent;
       display:block;
     ">Open in Google Maps</a>
-          </div>
+            </div>
+        </main>
+    </div>
 
-
-
-
-      </main>
-  </div>
-
-  <script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
