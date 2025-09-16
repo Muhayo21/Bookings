@@ -9,8 +9,6 @@ const countDisplay = document.getElementById("count");
 
 const MaxReservations = 14;
 let CurrentReservations = 0;
-let isUpdateMode = false; // Tracks if we are updating an existing guest
-let currentGuestIndex = -1; // Stores the index of the guest to update
 
 // 🟢 Load current reservation count from JSONBin
 async function loadReservationCount() {
@@ -36,6 +34,7 @@ async function loadReservationCount() {
 
 // 🔁 Call it once when the page loads
 loadReservationCount();
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -51,49 +50,41 @@ form.addEventListener('submit', async (e) => {
       headers: { 'X-Master-Key': apiKey }
     });
     const data = await res.json();
-    guests = Array.isArray(data.record) ? data.record : [];
+    guests = data.record || [];
   } catch (error) {
     console.error("Error fetching guest list:", error);
-    message.textContent = '⚠ Error loading guest list. Try again later.';
-    message.style.color = 'red';
+    if (status) {
+      status.textContent = '⚠ Error loading guest list. Try again later.';
+      status.style.color = 'red';
+    }
     return;
   }
 
-  if (isUpdateMode && currentGuestIndex >= 0) {
-    // ❌ Check capacity for update
-    const projectedReservations = CurrentReservations - guests[currentGuestIndex].guestCount + guestCount;
-    if (projectedReservations > MaxReservations) {
-      message.textContent = `❌ Only ${MaxReservations - (CurrentReservations - guests[currentGuestIndex].guestCount)} spot(s) available.`;
+  // ❌ Check if email already RSVP'd
+  const emailExists = guests.some(g => g.email.toLowerCase() === email);
+  if (emailExists) {
+    if (message) {
+      message.textContent = '❌ This email has already RSVP’d.';
       message.style.color = 'red';
-      return;
+    } else {
+      console.warn("Element with id='message' not found in HTML");
     }
-
-    // ✅ Update existing guest
-    guests[currentGuestIndex] = { name, email, attending, guestCount, seat: '' };
-    CurrentReservations = projectedReservations;
-
-  } else {
-    // ❌ Check if email already RSVP'd
-    const emailExists = guests.some(g => g.email.toLowerCase() === email);
-    if (emailExists) {
-      message.textContent = '❌ This email has already RSVP’d. Use Validate to update.';
-      message.style.color = 'red';
-      return;
-    }
-
-    // ❌ Check capacity for new RSVP
-    if (CurrentReservations + guestCount > MaxReservations) {
-      message.textContent = `❌ Only ${MaxReservations - CurrentReservations} spot(s) available.`;
-      message.style.color = 'red';
-      return;
-    }
-
-    // ✅ Add new guest
-    guests.push({ name, email, attending, guestCount, seat: '' });
-    CurrentReservations += guestCount;
+    return;
   }
 
-  // Save to JSONBin
+  // ❌ Check capacity BEFORE submitting
+  if (CurrentReservations + guestCount > MaxReservations) {
+    if (message) {
+      message.textContent = `❌ Only ${MaxReservations - CurrentReservations} spot(s) available.`;
+      message.style.color = 'red';
+    }
+    return;
+  }
+
+  // ✅ Proceed with saving
+  const newGuest = { name, email, attending, guestCount, seat: '' };
+  guests.push(newGuest);
+
   try {
     const saveRes = await fetch(apiUrl, {
       method: 'PUT',
@@ -105,28 +96,33 @@ form.addEventListener('submit', async (e) => {
     });
 
     if (saveRes.ok) {
+      CurrentReservations += guestCount;
       countDisplay.textContent = `${CurrentReservations} / ${MaxReservations} spots filled`;
-      message.textContent = isUpdateMode ? `✅ RSVP updated for ${name}.` : `✅ Reservation confirmed for ${guestCount}`;
-      message.style.color = 'green';
+
+      if (status) {
+        status.textContent = `✅ Thanks ${name}! Your RSVP has been saved.`;
+        status.style.color = 'green';
+      }
+
+      if (message) {
+        message.textContent = `✅ Reservation confirmed for ${guestCount}`;
+        message.style.color = 'green';
+      } else {
+        console.warn("Element with id='message' not found in HTML");
+      }
+
       form.reset();
-      submitBtn.textContent = 'Submit RSVP';
-      isUpdateMode = false;
-      currentGuestIndex = -1;
-      setDeleteButtonState(false);
     } else {
-      message.textContent = '❌ Error: Could not save your RSVP.';
-      message.style.color = 'red';
+      if (status) {
+        status.textContent = '❌ Error: Could not save your RSVP.';
+        status.style.color = 'red';
+      }
     }
   } catch (error) {
     console.error(error);
-    message.textContent = '❌ Network error. Please try again later.';
-    message.style.color = 'red';
+    if (status) {
+      status.textContent = '❌ Network error. Please try again later.';
+      status.style.color = 'red';
+    }
   }
 });
-
-    if (guestIndex >= 0) {
-      // Email found → populate form
-      const guest = guests[guestIndex];
-      document.getElementById('name').value = guest.name;
-      document.getElementById('attending').value = guest.attending;
-      document.getElementById('guestCount').value = guest.guestCount;
