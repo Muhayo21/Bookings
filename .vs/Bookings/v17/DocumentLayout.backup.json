@@ -18,15 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
@@ -36,7 +32,7 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADYAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAAD0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-08-27T05:54:35.208Z",
               "EditorCaption": ""
@@ -51,8 +47,7 @@
               "RelativeToolTip": "index.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-08-27T05:54:33.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-27T05:54:33.869Z"
             }
           ]
         }
