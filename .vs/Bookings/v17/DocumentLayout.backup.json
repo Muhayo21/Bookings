@@ -9,6 +9,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +22,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "styles.css",
+              "DocumentMoniker": "C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\styles.css",
+              "RelativeDocumentMoniker": "styles.css",
+              "ToolTip": "C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\styles.css",
+              "RelativeToolTip": "styles.css",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAE0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-16T13:03:37.151Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -32,7 +53,7 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAAAD0AAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCsAAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-08-27T05:54:35.208Z",
               "EditorCaption": ""
@@ -45,9 +66,10 @@
               "RelativeDocumentMoniker": "index.js",
               "ToolTip": "C:\\Users\\muhammad.osman\\source\\repos\\Muhayo21\\Bookings\\index.js",
               "RelativeToolTip": "index.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-08-27T05:54:33.869Z"
+              "WhenOpened": "2025-08-27T05:54:33.869Z",
+              "EditorCaption": ""
             }
           ]
         }
