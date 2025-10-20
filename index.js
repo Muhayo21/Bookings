@@ -7,7 +7,7 @@ const status = document.getElementById('status');
 const message = document.getElementById("message");
 const countDisplay = document.getElementById("count");
 
-const MaxReservations = 14;
+const MaxReservations = 15;
 let CurrentReservations = 0;
 
 // 🟢 Load current reservation count from JSONBin
